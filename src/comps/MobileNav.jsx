@@ -7,6 +7,8 @@ function MobileNav() {
   const navItemIconRefs = useRef([]);
   navItemIconRefs.current = [];
 
+  const tl = useRef(null);
+
   const svgs = [
     {
       alt: "login",
@@ -39,40 +41,40 @@ function MobileNav() {
   const [isMenuOpen, ToggleMenu] = useState(false);
 
   useEffect(() => {
-    var tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
-    tl.to([activatorRef.current], {
-      background: "#805ad5",
-      borderRadius: "0 5em 5em 0",
-    });
-    tl.to(
-      [navItemContainerRef.current],
-      {
-        clipPath: "ellipse(100% 100% at 50% 50%)",
-      },
-      "-=.5"
-    );
-
-    tl.to(
-      [navItemIconRefs.current],
-      {
-        opacity: 1,
-        transform: "translateX(0)",
-        stagger: 0.5,
-      },
-      "-=.5"
-    );
-    tl.pause();
+    console.log(tl.current);
+    tl.current = gsap
+      .timeline({ defaults: { ease: "power2.inOut" } })
+      .to([activatorRef.current], {
+        background: "#805ad5",
+        borderRadius: "0 5em 5em 0",
+      })
+      .to(
+        [navItemContainerRef.current],
+        {
+          clipPath: "ellipse(100% 100% at 50% 50%)",
+        },
+        "-=.5"
+      )
+      .to(
+        [navItemIconRefs.current],
+        {
+          opacity: 1,
+          transform: "translateX(0)",
+          stagger: 0.5,
+        },
+        "-=.5"
+      )
+      .pause();
     console.log(tl);
 
     // Here tl.reverse() is not working
     // I checked ReactDev Tools and value of isMenuOpen is toggeling so no issue there
     // Cam anyone Help me please.
-    if (isMenuOpen) {
-      tl.play();
-    } else {
-      tl.reverse();
-    }
-  }, [isMenuOpen, ToggleMenu]);
+  }, []);
+
+  useEffect(() => {
+    isMenuOpen ? tl.current.play() : tl.current.reverse();
+  }, [isMenuOpen]);
 
   return (
     <nav>
