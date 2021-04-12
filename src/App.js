@@ -1,23 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.scss";
+import React from "react";
+import MobileNav from "./comps/MobileNav";
+import Nav from "./comps/Nav";
+import { CalculateWidth } from "./hooks/calculateWidth";
 
 function App() {
+  var mobile = CalculateWidth();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      {mobile ? <MobileNav></MobileNav> : <Nav></Nav>}
+      <h2>ehu</h2>
     </div>
   );
 }
